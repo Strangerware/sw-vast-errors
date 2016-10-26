@@ -38,3 +38,21 @@ test('must log correctly', (t) => {
   const error = new VastError();
   t.is(`${error}`, `Vast Error ${defaultErrorCode}: ${errorDescriptions[defaultErrorCode]}`);
 });
+
+test('must generate error stack', (t) => {
+  const error = new VastError();
+  t.is(typeof error.stack, 'string');
+});
+
+test('must allow original error stack', (t) => {
+  const original = new Error('Humans are dead!');
+  const error = new VastError({ error: original });
+  t.is(original.stack, error.stack);
+});
+
+test('must store original error', (t) => {
+  const original = new Error('Afirmative!');
+  const error = new VastError({ error: original });
+  t.is(original, error.originalError);
+});
+
